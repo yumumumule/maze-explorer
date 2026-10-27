@@ -1,0 +1,31 @@
+cmake_minimum_required(VERSION 3.16)
+project(maze_explorer C)
+
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+
+add_executable(maze_explorer main.c)
+
+if(MSVC)
+    target_compile_options(maze_explorer PRIVATE /utf-8 /W4)
+else()
+    target_compile_options(maze_explorer PRIVATE -Wall -Wextra)
+endif()
+
+if(NOT WIN32)
+    set(CURSES_NEED_WIDE TRUE)
+    find_package(Curses REQUIRED)
+    target_include_directories(maze_explorer PRIVATE ${CURSES_INCLUDE_DIRS})
+    target_link_libraries(maze_explorer PRIVATE ${CURSES_LIBRARIES})
+endif()
+
+include(CTest)
+if(BUILD_TESTING)
+    add_executable(maze_tests tests/test_maze.c)
+    if(MSVC)
+        target_compile_options(maze_tests PRIVATE /utf-8 /W4 /UNDEBUG)
+    else()
+        target_compile_options(maze_tests PRIVATE -Wall -Wextra -UNDEBUG)
+    endif()
+    add_test(NAME maze_logic COMMAND maze_tests)
+endif()

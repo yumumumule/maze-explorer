@@ -1,0 +1,17 @@
+build*/
+cmake-build-*/
+.idea/
+.vscode/
+__pycache__/
+*.py[cod]
+*.exe
+*.o
+*.obj
+*.pdb
+*.ilk
+*.dll
+*.so
+*.dylib
+*.zip
+.DS_Store
+Thumbs.db
